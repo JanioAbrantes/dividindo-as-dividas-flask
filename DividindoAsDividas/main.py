@@ -1,40 +1,46 @@
-from pessoa import Pessoa
+from flask import Flask, render_template, request
+
 from familia import Familia
+from pessoa import Pessoa
 
-nome_familia = input('Insira o nome de sua família: ')
-grupo_familiar = Familia(nome_familia)
 
-while True:
-    nome_pessoa = input('Digite o nome que deseja adicionar a familia, ou deixe em branco caso não queira '
-                        'adicionar mais ninguém: ')
-    if nome_pessoa == '':
-        break
+app = Flask(__name__)
 
-    while True:
+
+@app.route('/')
+def homepage():
+    return render_template('index.html')
+
+
+@app.route('/familia', methods=['GET', 'POST'])
+def criar_familia():
+    global familia
+    if request.method == 'POST':
+        familia = Familia(request.form['nome_da_familia'])
+        request.method = ''
+        return membros_da_familia()
+    return render_template('familia.html')
+
+
+@app.route('/membros', methods=['GET', 'POST'])
+def membros_da_familia():
+    if request.method == 'POST':
         try:
-            renda_pessoa = float(input('Digite a renda mensal dessa pessoa: '))
-            break
+            nome_membro = request.form['nome']
+            renda_membro = float(request.form['renda'])
+            familia.adicionar_membros(nome_membro, renda_membro)
         except ValueError:
-            print('Por favor, informe um valor válido.')
+            return render_template('membros-da-familia.html', familia=familia.nome, membros_adicionados=familia.membros)
+    print(familia.membros)
+    for membros in familia.membros:
+        print(membros)
+    return render_template('membros-da-familia.html', familia=familia.nome, membros_adicionados=familia.membros)
 
-    nova_pessoa = Pessoa(nome_pessoa, renda_pessoa)
-    grupo_familiar.adicionar_membros(nova_pessoa.nome, nova_pessoa.renda)
-    print(nova_pessoa)
 
-while True:
-    try:
-        novo_pagamento = float(input('Digite o valor a ser pago, ou digite 0 caso não'
-                                    ' queira adicionar mais nenhum valor: '))
-        if novo_pagamento == 0:
-            break
-        grupo_familiar.calcular_pagamentos_mensais(novo_pagamento)
-    except ValueError:
-        print('Por favor, informe um valor válido.')
+@app.route('/contas')
+def contas_a_pagar():
+    return render_template('contas-a-pagar.html')
 
-for membro in grupo_familiar.membros.items():
-    nome_membro = membro[0]
-    renda_membro = membro[1]
-    porcentagem_da_renda, pagamento_individual = \
-        grupo_familiar.calcular_pagamento_individual(nome_membro, renda_membro)
-    print(f'O valor a ser pago por {nome_membro} será de R${pagamento_individual:.2f}, '
-          f'que equivale a {porcentagem_da_renda * 100:.2f}% de todos os pagamentos')
+
+if __name__ == '__main__':
+    app.run(debug=True)
