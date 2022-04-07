@@ -14,6 +14,7 @@ class Familia:
         self.pagamentos_mensais = 0
         self.nome = nome.capitalize()
         self.membros = {}
+        self.contas_a_pagar = {}
 
     def adicionar_membros(self, nome:str, renda:float):
         """
@@ -25,12 +26,14 @@ class Familia:
         self.membros[nome] = renda  # Cria uma chave e um valor utilizando nome e renda da pessoa
         self.renda_total += renda  # Adiciona a renda da pessoa à renda total da familia
 
-    def calcular_pagamentos_mensais(self, valor_a_pagar:float):
+    def calcular_pagamentos_mensais(self, nome_conta:str, valor_a_pagar:float):
         """
         Calcula a soma de todos os pagamentos informados, um de cada vez
+        :param nome_conta: str
         :param valor_a_pagar: float
         :return: None
         """
+        self.contas_a_pagar[nome_conta] = valor_a_pagar
         self.pagamentos_mensais += valor_a_pagar
 
     def calcular_pagamento_individual(self, membro:str, renda:float):
@@ -42,7 +45,7 @@ class Familia:
         """
         porcentagem_da_renda = renda/self.renda_total  # Calcula a porcentagem que deverá ser pago pelo membro
         pagamento_individual = self.pagamentos_mensais * porcentagem_da_renda  # Calcula o valor a ser pago
-        return porcentagem_da_renda, pagamento_individual
+        return f'O valor a ser pago por {membro} será de: {pagamento_individual:.2f}'
 
     def __repr__(self):
         """

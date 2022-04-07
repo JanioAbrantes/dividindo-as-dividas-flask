@@ -1,10 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>Contas a Pagar</title>
+    <!-- Imports -->
+
+    <!-- Google Fonts -->
+    <!-- Importa as fontes escolhidas do google fonts. Nota que você ainda precisa por elas no styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Ubuntu:wght@300&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <!-- Necessário para utilizar icones do fontawesome -->
+    <script src="https://kit.fontawesome.com/39481c7f28.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap -->
+    <!-- Imports necessários para começar a utilizar o bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+    <!-- CSS Scripts -->
+    <!-- Indica onde estão guardados seus arquivos de estilo -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <h1>Contas a Pagar</h1>
+<div class="row">
+    <div class="modal-dialog" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Membros da família {{ familia }}</h5>
+                </div>
+                <form action="{{ url_for('contas_a_pagar') }}" method="post">
+                    <div class="modal-body">
+                        <label>Conta</label>
+                        <input type="text" placeholder="Conta" name="conta">
+                    </div>
+                    <div class="modal-body">
+                        <label>Valor</label>
+                        <input type="number" placeholder="Valor" name="valor">
+                    </div>
+                    <div class="row">
+                        <div class="d-grid gap-2 col-lg-6">
+                            <button type="submit" class="btn btn-primary">Adicionar nova conta</button>
+                        </div>
+                        <div class="d-grid gap-2 col-lg-6">
+                            <button type="button" class="btn btn-primary"
+                                    onclick="window.location.href='{{ url_for('dividir_dividas') }}'">Finalizar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-dialog" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Lista de Contas a Pagar</h5>
+                </div>
+                <div>
+                    {% for conta in contas_adicionadas.items() %}
+                        <h5>Conta: {{ conta[0] }}</h5>
+                        <h5>Valor: {{ conta[1] }}</h5>
+                        <hr class="my-4"/>
+                    {% endfor %}
+                    <h5>Total: {{ total_a_pagar }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, redirect, render_template, request, url_for
 
 from familia import Familia
 from pessoa import Pessoa
-
 
 app = Flask(__name__)
 
@@ -31,15 +30,40 @@ def membros_da_familia():
             familia.adicionar_membros(nome_membro, renda_membro)
         except ValueError:
             return render_template('membros-da-familia.html', familia=familia.nome, membros_adicionados=familia.membros)
-    print(familia.membros)
-    for membros in familia.membros:
-        print(membros)
-    return render_template('membros-da-familia.html', familia=familia.nome, membros_adicionados=familia.membros)
+        except NameError:
+            return render_template('index.html')
+    try:
+        return render_template('membros-da-familia.html', familia=familia.nome, membros_adicionados=familia.membros)
+    except NameError:
+        return redirect(url_for('homepage'))
 
 
-@app.route('/contas')
+@app.route('/contas', methods=['GET', 'POST'])
 def contas_a_pagar():
-    return render_template('contas-a-pagar.html')
+    if request.method == 'POST':
+        try:
+            nome_conta = request.form['conta']
+            valor_conta = float(request.form['valor'])
+            familia.calcular_pagamentos_mensais(nome_conta, valor_conta)
+        except ValueError:
+            return render_template('contas-a-pagar.html', familia=familia.nome,
+                                   contas_adicionadas=familia.contas_a_pagar, total_a_pagar=familia.pagamentos_mensais)
+        except NameError:
+            return render_template('index.html')
+    try:
+        return render_template('contas-a-pagar.html', familia=familia.nome, contas_adicionadas=familia.contas_a_pagar,
+                           total_a_pagar=familia.pagamentos_mensais)
+    except NameError:
+        return redirect(url_for('homepage'))
+
+
+@app.route('/dividas-divididas')
+def dividir_dividas():
+    try:
+        global familia
+        return render_template('dividas-divididas.html',familia=familia)
+    except NameError:
+        return redirect(url_for('homepage'))
 
 
 if __name__ == '__main__':

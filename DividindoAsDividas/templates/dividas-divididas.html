@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dívidas Divididas</title>
+</head>
+<body>
+    {% for membros in familia.membros.items() %}
+        <h1>{{ familia.calcular_pagamento_individual(membros[0], membros[1]) }}</h1>
+    {% endfor %}
+</body>
+</html>
