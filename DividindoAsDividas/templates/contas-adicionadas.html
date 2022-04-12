@@ -1,0 +1,21 @@
+<div class="modal-dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Lista de Contas a Pagar</h5>
+            </div>
+            <div class="modal-body">
+                {% if request.endpoint == "contas_a_pagar" or request.endpoint == "dividir_dividas" %}
+                    {% for conta in contas_adicionadas.items() %}
+                        <h6>Conta: {{ conta[0] }}</h6>
+                        <h6>Valor: {{ conta[1] }}</h6>
+                        <p></p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <h5 class="text-left">Total a Pagar: {{ total_a_pagar }}</h5>
+            </div>
+        </div>
+    </div>
+</div>

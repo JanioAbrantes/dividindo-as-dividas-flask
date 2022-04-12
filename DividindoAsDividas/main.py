@@ -29,11 +29,13 @@ def membros_da_familia():
             renda_membro = float(request.form['renda'])
             familia.adicionar_membros(nome_membro, renda_membro)
         except ValueError:
-            return render_template('membros-da-familia.html', familia=familia.nome, membros_adicionados=familia.membros)
+            return render_template('membros-da-familia.html', nome_familia=familia.nome, membros_adicionados=familia.membros,
+                                   renda_total=familia.renda_total)
         except NameError:
             return render_template('index.html')
     try:
-        return render_template('membros-da-familia.html', familia=familia.nome, membros_adicionados=familia.membros)
+        return render_template('membros-da-familia.html', nome_familia=familia.nome, membros_adicionados=familia.membros,
+                               renda_total=familia.renda_total)
     except NameError:
         return redirect(url_for('homepage'))
 
@@ -46,13 +48,15 @@ def contas_a_pagar():
             valor_conta = float(request.form['valor'])
             familia.calcular_pagamentos_mensais(nome_conta, valor_conta)
         except ValueError:
-            return render_template('contas-a-pagar.html', familia=familia.nome,
-                                   contas_adicionadas=familia.contas_a_pagar, total_a_pagar=familia.pagamentos_mensais)
+            return render_template('contas-a-pagar.html', nome_familia=familia.nome,
+                                   contas_adicionadas=familia.contas_a_pagar, total_a_pagar=familia.pagamentos_mensais,
+                                   membros_adicionados=familia.membros, renda_total=familia.renda_total)
         except NameError:
-            return render_template('index.html')
+            return redirect(url_for('homepage'))
     try:
-        return render_template('contas-a-pagar.html', familia=familia.nome, contas_adicionadas=familia.contas_a_pagar,
-                           total_a_pagar=familia.pagamentos_mensais)
+        return render_template('contas-a-pagar.html', nome_familia=familia.nome, contas_adicionadas=familia.contas_a_pagar,
+                               total_a_pagar=familia.pagamentos_mensais, membros_adicionados=familia.membros,
+                               renda_total=familia.renda_total)
     except NameError:
         return redirect(url_for('homepage'))
 
@@ -61,10 +65,12 @@ def contas_a_pagar():
 def dividir_dividas():
     try:
         global familia
-        return render_template('dividas-divididas.html',familia=familia)
+        return render_template('dividas-divididas.html', familia=familia, contas_adicionadas=familia.contas_a_pagar,
+                               total_a_pagar=familia.pagamentos_mensais, membros_adicionados=familia.membros,
+                               renda_total=familia.renda_total, nome_familia=familia.nome)
     except NameError:
         return redirect(url_for('homepage'))
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

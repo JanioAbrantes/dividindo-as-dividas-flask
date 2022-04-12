@@ -1,0 +1,22 @@
+<div class="modal-dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Membros da família {{ nome_familia }}</h5>
+            </div>
+            <div class="modal-body">
+                {% if request.endpoint == "membros_da_familia" or request.endpoint == "contas_a_pagar"
+                or request.endpoint == "dividir_dividas" %}
+                    {% for membro in membros_adicionados.items() %}
+                        <h6>Nome: {{ membro[0] }}</h6>
+                        <h6>Renda: {{ membro[1] }}</h6>
+                        <p></p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <h5>Renda Total: {{ renda_total }}</h5>
+            </div>
+        </div>
+    </div>
+</div>

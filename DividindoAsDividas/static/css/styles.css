@@ -1,0 +1,33 @@
+h1 {
+    font-family: 'Rye', cursive;
+    font-size: 6.5rem;
+    text-align: center;
+}
+
+h5 {
+    font-size: 1.2rem;
+}
+
+body {
+    background: linear-gradient(to right, #2bc0e4, #eaecc6);
+    font-family: 'Merriweather', serif;
+}
+
+.imagem {
+    text-align: center;
+}
+
+.middle-page {
+    height: 450px;
+    max-width: 100%;
+}
+
+/* Modal Section */
+.modal-content {
+    height: 400px;
+    background-color: transparent;
+}
+
+.modal-footer {
+    display: block;
+}
