@@ -1,5 +1,17 @@
-<div class="imagem">
-    <img class="bar-code" src="../static/img/codigo-de-barras2.png" alt="iphone-mockup">
+<div class="row align-items-center">
+    <div class="col border-top border-dark border-2">
+        {% if not calculo_individual %}
+            <button type="button" class="button"
+                    onclick="window.location.href='{{ url_for('dividir_dividas') }}'">
+            </button>
+        {% else %}
+            <button type="button" class="button"
+                    onclick="window.location.href='{{ url_for('dividir_dividas') }}'" disabled>
+            </button>
+        {% endif %}
+    </div>
+</div>
+</div>
 </div>
 </body>
 </html>

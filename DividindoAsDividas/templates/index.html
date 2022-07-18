@@ -1,27 +1,31 @@
 {% include "header.html" %}
-<div class="row middle-page">
-    <div class="col-lg-4">
-        {% include "membros-adicionados.html" %}
+<div class="row align-items-center border-bottom border-dark border-2">
+    <div class="col">
+        {% include "familia.html" %}
     </div>
-    <div class="col-lg-4">
-        <div class="modal-dialog" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">SEJA BEM VINDO AO DIVIDINDO AS DÍVIDAS</h5>
-                    </div>
-                    <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-primary"
-                                onclick="window.location.href='{{ url_for('criar_familia') }}'">Clique aqui para
-                            Continuar
-                        </button>
-                    </div>
-                </div>
-            </div>
+</div>
+<div class="container-fluid">
+    <div class="row min-size">
+        <div class="col border-end border-dark border-2">
+            {% include "membros-da-familia.html" %}
+        </div>
+        <div class="col">
+            {% if not calculo_individual %}
+                {% include "renda-dos-membros.html" %}
+            {% else %}
+                {% include "dividas-divididas.html" %}
+            {% endif %}
         </div>
     </div>
-    <div class="col-lg-4">
-        {% include "contas-adicionadas.html" %}
+</div>
+<div class="container-fluid">
+    <div class="row border-top border-dark border-2 min-size">
+        <div class="col border-end border-dark border-2">
+            {% include "contas-a-pagar.html" %}
+        </div>
+        <div class="col">
+            {% include "valores-contas.html" %}
+        </div>
     </div>
 </div>
 {% include "footer.html" %}

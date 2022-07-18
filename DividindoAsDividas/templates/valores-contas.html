@@ -1,0 +1,19 @@
+<form action="{{ url_for('valor_contas') }}" method="post">
+    <label class="nome-campos">Valores:</label>
+    {% if nome_familia != '' and not calculo_individual %}
+        {% if request.endpoint == 'valor_contas' %}
+            <input class="col-6" type="number" step="0.01" placeholder="Valor" name="valor_conta" autofocus>
+        {% else %}
+            <input class="col-6" type="number" step="0.01" placeholder="Valor" name="valor_conta">
+        {% endif %}
+    {% endif %}
+    <hr>
+    {% for n in range(valores_adicionados|length) %}
+        <h6>{{ monetizar(valores_adicionados[n]) }}</h6>
+        <hr>
+        {% if n == (valores_adicionados|length)-1 %}
+            <br>
+        {% endif %}
+    {% endfor %}
+    <h6 class="total">{{ monetizar(total_contas) }}</h6>
+</form>

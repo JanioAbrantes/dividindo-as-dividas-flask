@@ -1,0 +1,19 @@
+<form action="{{ url_for('membros_renda') }}" method="post">
+    <label class="nome-campos">Renda:</label>
+    {% if nome_familia != ''%}
+        {% if request.endpoint == 'membros_renda' %}
+            <input class="col-6" type="number" step="0.01" placeholder="Renda" name="renda_mensal" autofocus>
+        {% else %}
+            <input class="col-6" type="number" step="0.01" placeholder="Renda" name="renda_mensal">
+        {% endif %}
+    {% endif %}
+    <hr>
+    {% for n in range(rendas_adicionadas|length) %}
+        <h6>{{ monetizar(rendas_adicionadas[n]) }}</h6>
+        <hr>
+        {% if n == (rendas_adicionadas|length)-1 %}
+            <br>
+        {% endif %}
+    {% endfor %}
+    <h6 class="total">{{ monetizar(renda_total) }}</h6>
+</form>

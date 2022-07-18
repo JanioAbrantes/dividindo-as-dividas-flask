@@ -1,42 +1,19 @@
-{% include "header.html" %}
-<div class="row middle-page">
-    <div class="col-lg-4">
-        {% include "membros-adicionados.html" %}
-    </div>
-    <div class="col-lg-4">
-        <div class="modal-dialog" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Membros da família {{ nome_familia }}</h5>
-                    </div>
-                    <form action="{{ url_for('membros_da_familia') }}" method="post">
-                        <div class="modal-body">
-                            <label>Nome</label>
-                            <input type="text" placeholder="Nome" name="nome">
-                        </div>
-                        <div class="modal-body">
-                            <label>Renda</label>
-                            <input type="number" placeholder="Renda" name="renda">
-                        </div>
-                        <div class="row">
-                            <div class="d-grid gap-2 col-lg-6">
-                                <button type="submit" class="btn btn-primary">Criar novo membro</button>
-                            </div>
-                            <div class="d-grid gap-2 col-lg-6">
-                                <button type="button" class="btn btn-primary"
-                                        onclick="window.location.href='{{ url_for('contas_a_pagar') }}'">Ir para Contas
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4">
-        {% include "contas-adicionadas.html" %}
-    </div>
-</div>
-{% include "footer.html" %}
+<form action="{{ url_for('membros_nome') }}" method="post">
+    <label class="nome-campos">Membros:</label>
+    {% if nome_familia != '' and not calculo_individual %}
+        {% if request.endpoint == 'membros_nome' %}
+            <input class="col-6" type="text" placeholder="Nome" name="nome_do_membro" autofocus>
+        {% else %}
+            <input class="col-6" type="text" placeholder="Nome" name="nome_do_membro">
+        {% endif %}
+    {% endif %}
+    <hr>
+    {% for n in range(membros_adicionados|length) %}
+        <h6>{{ membros_adicionados[n] }}</h6>
+        <hr>
+        {% if n == (membros_adicionados|length)-1 %}
+            <br>
+        {% endif %}
+    {% endfor %}
+    <h6 class="total">Total:</h6>
+</form>

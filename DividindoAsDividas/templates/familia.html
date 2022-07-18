@@ -1,30 +1,11 @@
-{% include "header.html" %}
-<div class="row middle-page">
-    <div class="col-lg-4">
-        {% include "membros-adicionados.html" %}
+{% if nome_familia == '' %}
+    <form class="nome-familia-input" action="{{ url_for('criar_familia') }}" method="post">
+        <label class="pdr12">Família:</label>
+        <input class="col-4" type="text" placeholder="Nome" name="nome_da_familia" autofocus="autofocus">
+    </form>
+{% else %}
+    <div class="nome-familia">
+        <h6 class="pdr12" >Família:</h6>
+        <h6>{{ nome_familia }}</h6>
     </div>
-    <div class="col-lg-4">
-        <div class="modal-dialog" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Informe o nome de sua família:</h5>
-                    </div>
-                    <form action="{{ url_for('criar_familia') }}" method="post">
-                        <div class="modal-body">
-                            <input type="text" placeholder="Família" name="nome_da_familia">
-                        </div>
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">Continue</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4">
-        {% include "contas-adicionadas.html" %}
-    </div>
-</div>
-
-{% include "footer.html" %}
+{% endif %}

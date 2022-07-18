@@ -1,42 +1,19 @@
-{% include "header.html" %}
-<div class="row middle-page">
-    <div class="col-lg-4">
-        {% include "membros-adicionados.html" %}
-    </div>
-    <div class="col-lg-4">
-        <div class="modal-dialog" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Membros da família {{ nome_familia }}</h5>
-                    </div>
-                    <form action="{{ url_for('contas_a_pagar') }}" method="post">
-                        <div class="modal-body">
-                            <label>Conta</label>
-                            <input type="text" placeholder="Conta" name="conta">
-                        </div>
-                        <div class="modal-body">
-                            <label>Valor</label>
-                            <input type="number" placeholder="Valor" name="valor">
-                        </div>
-                        <div class="row">
-                            <div class="d-grid gap-2 col-lg-6">
-                                <button type="submit" class="btn btn-primary">Adicionar nova conta</button>
-                            </div>
-                            <div class="d-grid gap-2 col-lg-6">
-                                <button type="button" class="btn btn-primary"
-                                        onclick="window.location.href='{{ url_for('dividir_dividas') }}'">Finalizar
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4">
-        {% include "contas-adicionadas.html" %}
-    </div>
-</div>
-{% include "footer.html" %}
+<form action="{{ url_for('contas_a_pagar') }}" method="post">
+    <label class="pdr12 nome-campos">Contas:</label>
+    {% if nome_familia != '' and not calculo_individual %}
+        {% if request.endpoint == 'contas_a_pagar' %}
+            <input class="col-6" type="text" placeholder="Conta" name="nome_conta" autofocus>
+        {% else %}
+            <input class="col-6" type="text" placeholder="Conta" name="nome_conta">
+        {% endif %}
+    {% endif %}
+    <hr>
+    {% for n in range(contas_adicionadas|length) %}
+        <h6>{{ contas_adicionadas[n] }}</h6>
+        <hr>
+        {% if n == (contas_adicionadas|length)-1 %}
+            <br>
+        {% endif %}
+    {% endfor %}
+    <h6 class="total">Total:</h6>
+</form>

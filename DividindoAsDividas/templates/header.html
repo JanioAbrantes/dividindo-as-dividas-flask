@@ -21,8 +21,21 @@
     <!-- CSS Scripts -->
     <!-- Indica onde estão guardados seus arquivos de estilo -->
     <link rel="stylesheet" href="../static/css/styles.css">
+
+    <!-- JS Script-->
+    <!-- Aqui embaixo é um código em JS que impede que os forms reenviem as mesmas
+    informações que já tenham enviado após o reload da página -->
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
 </head>
 <body>
-<div class="titulo">
-    <h1>DIVIDINDO AS DÍVIDAS</h1>
-</div>
+<div class="border border-dark border-2 folha">
+    <div class="container ">
+        <div class="row align-items-start">
+            <div class="col border-bottom border-dark border-2" align="center">
+                <h3>Dividindo as Dívidas</h3>
+            </div>
+        </div>

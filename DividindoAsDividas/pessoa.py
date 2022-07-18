@@ -1,21 +1,28 @@
-from DividindoAsDividas.familia import Familia
-class Pessoa:
+class Pessoas:
     """
     Classe que irá criar o objeto pessoa, pegando o nome e a renda dela.
     """
-
-    def __init__(self, nome:str, renda:float):
+    def __init__(self):
         """
-        Cria uma nova pessoa.
+        Cria um novo grupo de pessoa.
         :param nome: str
         :param renda: float
         """
-        self.nome = nome.capitalize()
-        self.renda = renda
+        self.nomes = ()
+        self.rendas = ()
 
-    def __repr__(self):
+    def adicionar_nome(self, nome:str):
         """
-        Representa a pessoa, informando seu nome e sua renda.
-        :return: str
+        Adiciona o nome de uma pessoa
+        :param nome: str
+        :return: None
         """
-        return f'Nome: {self.nome} Renda: {self.renda}'
+        self.nomes = (self.nomes + (nome,))
+
+    def adicionar_renda(self, renda:float):
+        """
+        Adiciona a renda de uma pessoa
+        :param renda: float
+        :return: None
+        """
+        self.rendas = (self.rendas + (renda,))
